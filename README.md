@@ -42,6 +42,9 @@
    python manage.py createsuperuser
    ```
 
+
+## Author & Copyright
+Developed by **Hasnaa Khaled** © 2026. All rights reserved.
 5. تشغيل السيرفر المحلي:
    ```bash
    python manage.py runserver
