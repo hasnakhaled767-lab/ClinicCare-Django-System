@@ -1,0 +1,50 @@
+{% extends 'clinics/base.html' %}
+{% block title %}روشتة طبية - {{ record.appointment.patient.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-5 border">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">{{ record.appointment.doctor }}</h4>
+                    <div class="text-muted small">هاتف العيادة: {{ record.appointment.doctor.phone }}</div>
+                </div>
+                <div class="text-start">
+                    <span class="badge bg-light text-dark border">التاريخ: {{ record.created_at|date:"Y-m-d" }}</span>
+                </div>
+            </div>
+
+            <div class="row mb-4 bg-light p-3 rounded">
+                <div class="col-6"><strong>اسم المريض:</strong> {{ record.appointment.patient.name }}</div>
+                <div class="col-3"><strong>العمر:</strong> {{ record.appointment.patient.age }} سنة</div>
+                <div class="col-3"><strong>الجنس:</strong> {{ record.appointment.patient.get_gender_display }}</div>
+            </div>
+
+            <div class="mb-4">
+                <h6 class="fw-bold text-secondary">التشخيص (Diagnosis):</h6>
+                <p class="border-start border-3 border-primary ps-3">{{ record.diagnosis|linebreaksbr }}</p>
+            </div>
+
+            <div class="mb-4">
+                <h6 class="fw-bold text-secondary">الأدوية والروشتة (Rx):</h6>
+                <div class="p-3 border rounded bg-white">
+                    {{ record.prescription|linebreaksbr }}
+                </div>
+            </div>
+
+            {% if record.notes %}
+            <div class="mb-4">
+                <h6 class="fw-bold text-secondary">ملاحظات وتعليمات:</h6>
+                <p class="text-muted">{{ record.notes|linebreaksbr }}</p>
+            </div>
+            {% endif %}
+
+            <div class="d-flex justify-content-between mt-4 pt-3 border-top no-print">
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">العودة للرئيسية</a>
+                <button onclick="window.print()" class="btn btn-primary"><i class="bi bi-printer"></i> طباعة / حفظ كـ PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

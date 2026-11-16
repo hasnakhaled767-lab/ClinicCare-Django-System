@@ -1,0 +1,72 @@
+{% extends 'clinics/base.html' %}
+{% block title %}المواعيد والحجوزات{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="fw-bold mb-3">حجز موعد جديد</h5>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary w-100">تأكيد الحجز</button>
+            </form>
+            <div class="mt-3 small text-muted">
+                * ملاحظة: يجب إضافة طبيب واحد على الأقل من <a href="/admin/">لوحة الإدارة</a> لتتمكن من الحجز.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h5 class="fw-bold mb-3">جدول المواعيد</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>المريض</th>
+                            <th>الطبيب</th>
+                            <th>الموعد</th>
+                            <th>الحالة</th>
+                            <th>إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in appointments %}
+                        <tr>
+                            <td>{{ app.patient.name }}</td>
+                            <td>{{ app.doctor }}</td>
+                            <td>{{ app.appointment_date|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                {% if app.status == 'Pending' %}
+                                    <span class="badge bg-warning text-dark">قيد الانتظار</span>
+                                {% elif app.status == 'Completed' %}
+                                    <span class="badge bg-success">تم الكشف</span>
+                                {% else %}
+                                    <span class="badge bg-danger">ملغي</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'add_medical_record' app.id %}" class="btn btn-primary">الروشتة</a>
+                                    {% if app.status == 'Pending' %}
+                                        <a href="{% url 'update_appointment_status' app.id 'Cancelled' %}" class="btn btn-outline-danger">إلغاء</a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="5" class="text-center text-muted py-3">لا توجد مواعيد مسجلة.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

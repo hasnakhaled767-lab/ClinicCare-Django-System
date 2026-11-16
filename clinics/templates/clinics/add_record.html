@@ -1,0 +1,29 @@
+{% extends 'clinics/base.html' %}
+{% block title %}السجل الطبي والروشتة{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h5 class="fw-bold mb-2">إصدار روشتة / سجل طبي</h5>
+            <p class="text-muted mb-4">
+                المريض: <strong>{{ appointment.patient.name }}</strong> ({{ appointment.patient.age }} سنة) |
+                الطبيب: <strong>{{ appointment.doctor }}</strong>
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">حفظ وعرض الروشتة للطباعة</button>
+                    <a href="{% url 'appointment_list' %}" class="btn btn-secondary">رجوع</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
