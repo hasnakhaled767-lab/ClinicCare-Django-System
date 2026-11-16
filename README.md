@@ -41,14 +41,15 @@
    python manage.py migrate
    python manage.py createsuperuser
    ```
-
-
-## Author & Copyright
-Developed by **Hasnaa Khaled** © 2026. All rights reserved.
 5. تشغيل السيرفر المحلي:
    ```bash
    python manage.py runserver
    ```
 
 6. افتح المتصفح على الرابط: `http://127.0.0.1:8000/`
-   - ادخل أولاً إلى `http://127.0.0.1:8000/admin/` لإضافة بيانات **طبيب (Doctor)**، ثم ابدأ بتسجيل المرضى وحجز المواعيد من الواجهة الرئيسية.
+   - ادخل أولاً إلى `http://127.0.0.1:8000/admin/`
+   -  لإضافة بيانات **طبيب (Doctor)**، ثم ابدأ بتسجيل المرضى وحجز المواعيد من الواجهة الرئيسية.
+
+
+## Author & Copyright
+Developed by **Hasnaa Khaled** © 2026. All rights reserved.
